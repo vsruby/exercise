@@ -4,6 +4,9 @@ type Mutation {
 
     newUser(email: String!, name: String!): User!
     newBook(title: String!, summary: String!): Book!
+
+    updateUser(id: Int!, email: String!, name: String!): User!
+    updateBook(id: Int!, title: String!, summary: String!): Book!
 }
 
 type Query {

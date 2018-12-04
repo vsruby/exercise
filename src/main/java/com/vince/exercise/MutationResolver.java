@@ -60,4 +60,26 @@ public class MutationResolver implements GraphQLMutationResolver {
 
         return true;
     }
+
+    public Book updateBook(Integer id, String title, String summary) {
+        Book book = this.books.findById(id).orElseThrow(() -> new BookNotFoundException("Could not find book with given id", id));
+
+        book.setTitle(title);
+        book.setSummary(summary);
+
+        this.books.save(book);
+
+        return book;
+    }
+
+    public User updateUser(Integer id, String email, String name) {
+        User user = this.users.findById(id).orElseThrow(() -> new UserNotFoundException("Could not find user with given id", id));
+
+        user.setEmail(email);
+        user.setName(name);
+
+        this.users.save(user);
+
+        return user;
+    }
 }
