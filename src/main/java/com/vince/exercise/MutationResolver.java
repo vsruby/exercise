@@ -106,4 +106,24 @@ public class MutationResolver implements GraphQLMutationResolver {
 
         return book;
     }
+
+    public User revokeUser(Integer id) {
+        User user = this.users.findById(id).orElseThrow(() -> new UserNotFoundException("Could not find user with given id", id));
+
+        user.setLockedAt(new Date());
+
+        this.users.save(user);
+
+        return user;
+    }
+
+    public User reinstateUser(Integer id) {
+        User user = this.users.findById(id).orElseThrow(() -> new UserNotFoundException("Could not find user with given id", id));
+
+        user.setLockedAt(null);
+
+        this.users.save(user);
+
+        return user;
+    }
 }

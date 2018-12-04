@@ -10,6 +10,9 @@ type Mutation {
 
     checkOutBook(id: Int!, userId: Int!): Book!
     checkInBook(id: Int!): Book!
+
+    revokeUser(id: Int!): User!
+    reinstateUser(id: Int!): User!
 }
 
 type Query {
