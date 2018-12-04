@@ -16,6 +16,8 @@ type Query {
     allBooks: [Book]
     allUsers: [User]
 
+    allCheckedOutBooks: [Book]
+
     book(id: Int!): Book
     user(id: Int!): User
 }

@@ -25,6 +25,10 @@ public class QueryResolver implements GraphQLQueryResolver {
         return this.users.findAll();
     }
 
+    public Iterable<Book> allCheckedOutBooks() {
+        return this.books.findByUserIdIsNotNullAndCheckedAtIsNotNull();
+    }
+
     public Optional<Book> book(Integer id) {
         return this.books.findById(id);
     }
