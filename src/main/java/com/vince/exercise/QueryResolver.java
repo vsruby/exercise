@@ -29,7 +29,7 @@ public class QueryResolver implements GraphQLQueryResolver {
     }
 
     public Iterable<Book> allAvailableBooks() {
-        return this.books.findByMemberIdIsNullOrCheckedAtIsNull();
+        return this.books.findAllAvailable();
     }
 
     public Iterable<Book> allCheckedOutBooks() {
