@@ -1,0 +1,35 @@
+type Mutation {
+    deleteUser(id: Int!): Boolean!
+    deleteBook(id: Int!): Boolean!
+
+    newUser(email: String!, name: String!): User!
+    newBook(title: String!, summary: String!): Book!
+}
+
+type Query {
+    allBooks: [Book]
+    allUsers: [User]
+
+    book(id: Int!): Book
+    user(id: Int!): User
+}
+
+type Book {
+    id: ID
+    title: String
+    summary: String
+    user: User
+    checkedAt: String
+    createdAt: String
+    updatedAt: String
+}
+
+type User {
+    id: ID
+    email: String
+    name: String
+    books: [Book]
+    lockedAt: String
+    createdAt: String
+    updatedAt: String
+}
