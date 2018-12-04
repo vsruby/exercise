@@ -1,5 +1,6 @@
 package com.vince.exercise;
 
+import java.util.Date;
 import java.util.Optional;
 
 import com.coxautodev.graphql.tools.GraphQLMutationResolver;
@@ -81,5 +82,28 @@ public class MutationResolver implements GraphQLMutationResolver {
         this.users.save(user);
 
         return user;
+    }
+
+    public Book checkInBook(Integer id) {
+        Book book = this.books.findById(id).orElseThrow(() -> new BookNotFoundException("Could not find book with given id", id));
+
+        book.setCheckedAt(null);
+        book.setUser(null);
+
+        this.books.save(book);
+
+        return book;
+    }
+
+    public Book checkOutBook(Integer id, Integer userId) {
+        Book book = this.books.findById(id).orElseThrow(() -> new BookNotFoundException("Could not find book with given id", id));
+        User user = this.users.findById(userId).orElseThrow(() -> new UserNotFoundException("Could not find user with given id", userId));
+
+        book.setCheckedAt(new Date());
+        book.setUser(user);
+
+        this.books.save(book);
+
+        return book;
     }
 }
