@@ -103,6 +103,10 @@ public class MutationResolver implements GraphQLMutationResolver {
             throw new UserRevokedException("User with the given id cannot check out books.", userId);
         }
 
+        if (book.getUser() != null && book.getCheckedAt() != null) {
+            throw new BookNotAvailableException("Book with the given id has already been checked out.", id);
+        }
+
         book.setCheckedAt(new Date());
         book.setUser(user);
 
