@@ -1,5 +1,6 @@
 package com.vince.exercise;
 
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.data.repository.CrudRepository;
@@ -9,4 +10,5 @@ import org.springframework.data.rest.core.annotation.RepositoryRestResource;
 public interface BookRepository extends CrudRepository<Book, Integer> {
     List<Book> findByUserId(Integer id);
     List<Book> findByUserIdIsNotNullAndCheckedAtIsNotNull();
+    List<Book> findByUserIdIsNotNullAndCheckedAtBefore(Date date);
 }

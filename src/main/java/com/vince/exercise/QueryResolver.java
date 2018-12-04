@@ -1,8 +1,11 @@
 package com.vince.exercise;
 
+import java.util.Date;
 import java.util.Optional;
 
 import com.coxautodev.graphql.tools.GraphQLQueryResolver;
+
+import org.joda.time.DateTime;
 
 import org.springframework.stereotype.Component;
 
@@ -27,6 +30,12 @@ public class QueryResolver implements GraphQLQueryResolver {
 
     public Iterable<Book> allCheckedOutBooks() {
         return this.books.findByUserIdIsNotNullAndCheckedAtIsNotNull();
+    }
+
+    public Iterable<Book> allOverdueBooks() {
+        DateTime dt = new DateTime(new Date());
+        Date then = (dt.minusWeeks(3)).toDate();
+        return this.books.findByUserIdIsNotNullAndCheckedAtBefore(then);
     }
 
     public Optional<Book> book(Integer id) {
