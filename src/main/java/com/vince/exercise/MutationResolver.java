@@ -99,6 +99,10 @@ public class MutationResolver implements GraphQLMutationResolver {
         Book book = this.books.findById(id).orElseThrow(() -> new BookNotFoundException("Could not find book with given id", id));
         User user = this.users.findById(userId).orElseThrow(() -> new UserNotFoundException("Could not find user with given id", userId));
 
+        if (user.getLockedAt() != null) {
+            throw new UserRevokedException("User with the given id cannot check out books.", userId);
+        }
+
         book.setCheckedAt(new Date());
         book.setUser(user);
 
