@@ -8,11 +8,11 @@ import graphql.ErrorType;
 import graphql.GraphQLError;
 import graphql.language.SourceLocation;
 
-public class UserNotFoundException extends RuntimeException implements GraphQLError {
+public class MemberNotFoundException extends RuntimeException implements GraphQLError {
 
     private Map<String, Object> extensions = new HashMap<>();
 
-    public UserNotFoundException(String message, Integer invalidId) {
+    public MemberNotFoundException(String message, Integer invalidId) {
         super(message);
         extensions.put("invalidId", invalidId);
     }

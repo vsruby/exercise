@@ -8,11 +8,11 @@ import graphql.ErrorType;
 import graphql.GraphQLError;
 import graphql.language.SourceLocation;
 
-public class UserRevokedException extends RuntimeException implements GraphQLError {
+public class MemberRevokedException extends RuntimeException implements GraphQLError {
 
     private Map<String, Object> extensions = new HashMap<>();
 
-    public UserRevokedException(String message, Integer invalidId) {
+    public MemberRevokedException(String message, Integer invalidId) {
         super(message);
         extensions.put("invalidId", invalidId);
     }

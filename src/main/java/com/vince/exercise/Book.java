@@ -29,8 +29,8 @@ public class Book {
     private String summary;
 
     @ManyToOne
-    @JoinColumn(name = "user_id")
-    private User user;
+    @JoinColumn(name = "member_id")
+    private Member member;
 
     @Column(name = "checked_at")
     @Temporal(TemporalType.TIMESTAMP)
@@ -94,11 +94,11 @@ public class Book {
         this.updatedAt = updatedAt;
     }
 
-    public User getUser() {
-        return this.user;
+    public Member getMember() {
+        return this.member;
     }
 
-    public void setUser(User user) {
-        this.user = user;
+    public void setMember(Member member) {
+        this.member = member;
     }
 }

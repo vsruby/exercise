@@ -9,13 +9,13 @@ import org.springframework.stereotype.Component;
 @Component
 public class BookResolver implements GraphQLResolver<Book> {
 
-    private UserRepository users;
+    private MemberRepository members;
 
-    public BookResolver(UserRepository users) {
-        this.users = users;
+    public BookResolver(MemberRepository members) {
+        this.members = members;
     }
 
-    public Optional<User> getUser(Book book) {
-        return users.findById(book.getUser().getId());
+    public Optional<Member> getMember(Book book) {
+        return members.findById(book.getMember().getId());
     }
 }

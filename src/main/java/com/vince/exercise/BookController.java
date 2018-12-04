@@ -28,14 +28,14 @@ public class BookController {
     @Autowired
     private BookRepository books;
 
-    @GetMapping("/books/{id}/user")
-    public @ResponseBody User getUser(@PathVariable Integer id) {
+    @GetMapping("/books/{id}/member")
+    public @ResponseBody Member getMember(@PathVariable Integer id) {
         Optional<Book> result = books.findById(id);
 
         if (result.isPresent()) {
             Book book = result.get();
 
-            return book.getUser();
+            return book.getMember();
         } else {
             throw new HttpClientErrorException(HttpStatus.NOT_FOUND, "Could not find book with id: [" + id + "]");
         }

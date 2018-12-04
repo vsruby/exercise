@@ -9,8 +9,8 @@ import org.springframework.data.jpa.repository.Query;
 
 @RepositoryRestResource(collectionResourceRel = "books", path = "books")
 public interface BookRepository extends CrudRepository<Book, Integer> {
-    List<Book> findByUserId(Integer id);
-    List<Book> findByUserIdIsNotNullAndCheckedAtIsNotNull();
-    List<Book> findByUserIdIsNullOrCheckedAtIsNull();
-    List<Book> findByUserIdIsNotNullAndCheckedAtBefore(Date date);
+    List<Book> findByMemberId(Integer id);
+    List<Book> findByMemberIdIsNotNullAndCheckedAtIsNotNull();
+    List<Book> findByMemberIdIsNullOrCheckedAtIsNull();
+    List<Book> findByMemberIdIsNotNullAndCheckedAtBefore(Date date);
 }

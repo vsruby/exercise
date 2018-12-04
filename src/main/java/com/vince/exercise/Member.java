@@ -19,9 +19,9 @@ import javax.persistence.TemporalType;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
-@Entity(name = "User")
-@Table(name = "users")
-public class User {
+@Entity(name = "Member")
+@Table(name = "members")
+public class Member {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -49,12 +49,12 @@ public class User {
     @JsonIgnore
     @OneToMany(
         fetch = FetchType.EAGER,
-        mappedBy = "user"
+        mappedBy = "member"
     )
     private List<Book> books;
 
     public void addBook(Book book) {
-        book.setUser(this);
+        book.setMember(this);
         this.books.add(book);
     }
 

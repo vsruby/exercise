@@ -23,21 +23,21 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.HttpClientErrorException;
 
 @RestController
-public class UserController {
+public class MemberController {
 
     @Autowired
-    private UserRepository users;
+    private MemberRepository members;
 
-    @GetMapping("/users/{id}/books")
+    @GetMapping("/members/{id}/books")
     public @ResponseBody Iterable<Book> getBooks(@PathVariable Integer id) {
-        Optional<User> result = users.findById(id);
+        Optional<Member> result = members.findById(id);
 
         if (result.isPresent()) {
-            User user = result.get();
+            Member member = result.get();
 
-            return user.getBooks();
+            return member.getBooks();
         } else {
-            throw new HttpClientErrorException(HttpStatus.NOT_FOUND, "Could not find user with id: [" + id + "]");
+            throw new HttpClientErrorException(HttpStatus.NOT_FOUND, "Could not find member with id: [" + id + "]");
         }
     }
 }

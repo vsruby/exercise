@@ -13,40 +13,40 @@ import org.springframework.stereotype.Component;
 public class QueryResolver implements GraphQLQueryResolver {
 
     private BookRepository books;
-    private UserRepository users;
+    private MemberRepository members;
 
-    public QueryResolver(BookRepository books, UserRepository users) {
+    public QueryResolver(BookRepository books, MemberRepository members) {
         this.books = books;
-        this.users = users;
+        this.members = members;
     }
 
     public Iterable<Book> allBooks() {
         return this.books.findAll();
     }
 
-    public Iterable<User> allUsers() {
-        return this.users.findAll();
+    public Iterable<Member> allMembers() {
+        return this.members.findAll();
     }
 
     public Iterable<Book> allAvailableBooks() {
-        return this.books.findByUserIdIsNullOrCheckedAtIsNull();
+        return this.books.findByMemberIdIsNullOrCheckedAtIsNull();
     }
 
     public Iterable<Book> allCheckedOutBooks() {
-        return this.books.findByUserIdIsNotNullAndCheckedAtIsNotNull();
+        return this.books.findByMemberIdIsNotNullAndCheckedAtIsNotNull();
     }
 
     public Iterable<Book> allOverdueBooks() {
         DateTime dt = new DateTime(new Date());
         Date then = (dt.minusWeeks(3)).toDate();
-        return this.books.findByUserIdIsNotNullAndCheckedAtBefore(then);
+        return this.books.findByMemberIdIsNotNullAndCheckedAtBefore(then);
     }
 
     public Optional<Book> book(Integer id) {
         return this.books.findById(id);
     }
 
-    public Optional<User> user(Integer id) {
-        return this.users.findById(id);
+    public Optional<Member> member(Integer id) {
+        return this.members.findById(id);
     }
 }

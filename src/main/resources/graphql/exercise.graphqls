@@ -1,23 +1,23 @@
 type Mutation {
-    deleteUser(id: Int!): Boolean!
+    deleteMember(id: Int!): Boolean!
     deleteBook(id: Int!): Boolean!
 
-    newUser(email: String!, name: String!): User!
+    newMember(email: String!, name: String!): Member!
     newBook(title: String!, summary: String!): Book!
 
-    updateUser(id: Int!, email: String!, name: String!): User!
+    updateMember(id: Int!, email: String!, name: String!): Member!
     updateBook(id: Int!, title: String!, summary: String!): Book!
 
-    checkOutBook(id: Int!, userId: Int!): Book!
+    checkOutBook(id: Int!, memberId: Int!): Book!
     checkInBook(id: Int!): Book!
 
-    revokeUser(id: Int!): User!
-    reinstateUser(id: Int!): User!
+    revokeMember(id: Int!): Member!
+    reinstateMember(id: Int!): Member!
 }
 
 type Query {
     allBooks: [Book]
-    allUsers: [User]
+    allMembers: [Member]
 
     allAvailableBooks: [Book]
 
@@ -25,20 +25,20 @@ type Query {
     allOverdueBooks: [Book]
 
     book(id: Int!): Book
-    user(id: Int!): User
+    member(id: Int!): Member
 }
 
 type Book {
     id: ID
     title: String
     summary: String
-    user: User
+    member: Member
     checkedAt: String
     createdAt: String
     updatedAt: String
 }
 
-type User {
+type Member {
     id: ID
     email: String
     name: String

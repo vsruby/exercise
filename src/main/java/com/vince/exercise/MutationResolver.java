@@ -11,11 +11,11 @@ import org.springframework.stereotype.Component;
 public class MutationResolver implements GraphQLMutationResolver {
 
     private BookRepository books;
-    private UserRepository users;
+    private MemberRepository members;
 
-    public MutationResolver(BookRepository books, UserRepository users) {
+    public MutationResolver(BookRepository books, MemberRepository members) {
         this.books = books;
-        this.users = users;
+        this.members = members;
     }
 
     public Book newBook(String title, String summary) {
@@ -29,15 +29,15 @@ public class MutationResolver implements GraphQLMutationResolver {
         return book;
     }
 
-    public User newUser(String email, String name) {
-        User user = new User();
+    public Member newMember(String email, String name) {
+        Member member = new Member();
 
-        user.setEmail(email);
-        user.setName(name);
+        member.setEmail(email);
+        member.setName(name);
 
-        this.users.save(user);
+        this.members.save(member);
 
-        return user;
+        return member;
     }
 
     public boolean deleteBook(Integer id) {
@@ -45,18 +45,18 @@ public class MutationResolver implements GraphQLMutationResolver {
         return true;
     }
 
-    public boolean deleteUser(Integer id) {
-        Optional<User> result = this.users.findById(id);
+    public boolean deleteMember(Integer id) {
+        Optional<Member> result = this.members.findById(id);
 
-        result.ifPresent(user -> {
-            user.getBooks().forEach(book -> {
+        result.ifPresent(member -> {
+            member.getBooks().forEach(book -> {
                 book.setCheckedAt(null);
-                book.setUser(null);
+                book.setMember(null);
 
                 this.books.save(book);
             });
 
-            this.users.delete(user);
+            this.members.delete(member);
         });
 
         return true;
@@ -73,65 +73,65 @@ public class MutationResolver implements GraphQLMutationResolver {
         return book;
     }
 
-    public User updateUser(Integer id, String email, String name) {
-        User user = this.users.findById(id).orElseThrow(() -> new UserNotFoundException("Could not find user with given id", id));
+    public Member updateMember(Integer id, String email, String name) {
+        Member member = this.members.findById(id).orElseThrow(() -> new MemberNotFoundException("Could not find member with given id", id));
 
-        user.setEmail(email);
-        user.setName(name);
+        member.setEmail(email);
+        member.setName(name);
 
-        this.users.save(user);
+        this.members.save(member);
 
-        return user;
+        return member;
     }
 
     public Book checkInBook(Integer id) {
         Book book = this.books.findById(id).orElseThrow(() -> new BookNotFoundException("Could not find book with given id", id));
 
         book.setCheckedAt(null);
-        book.setUser(null);
+        book.setMember(null);
 
         this.books.save(book);
 
         return book;
     }
 
-    public Book checkOutBook(Integer id, Integer userId) {
+    public Book checkOutBook(Integer id, Integer memberId) {
         Book book = this.books.findById(id).orElseThrow(() -> new BookNotFoundException("Could not find book with given id", id));
-        User user = this.users.findById(userId).orElseThrow(() -> new UserNotFoundException("Could not find user with given id", userId));
+        Member member = this.members.findById(memberId).orElseThrow(() -> new MemberNotFoundException("Could not find member with given id", memberId));
 
-        if (user.getLockedAt() != null) {
-            throw new UserRevokedException("User with the given id cannot check out books.", userId);
+        if (member.getLockedAt() != null) {
+            throw new MemberRevokedException("Member with the given id cannot check out books.", memberId);
         }
 
-        if (book.getUser() != null && book.getCheckedAt() != null) {
+        if (book.getMember() != null && book.getCheckedAt() != null) {
             throw new BookNotAvailableException("Book with the given id has already been checked out.", id);
         }
 
         book.setCheckedAt(new Date());
-        book.setUser(user);
+        book.setMember(member);
 
         this.books.save(book);
 
         return book;
     }
 
-    public User revokeUser(Integer id) {
-        User user = this.users.findById(id).orElseThrow(() -> new UserNotFoundException("Could not find user with given id", id));
+    public Member revokeMember(Integer id) {
+        Member member = this.members.findById(id).orElseThrow(() -> new MemberNotFoundException("Could not find member with given id", id));
 
-        user.setLockedAt(new Date());
+        member.setLockedAt(new Date());
 
-        this.users.save(user);
+        this.members.save(member);
 
-        return user;
+        return member;
     }
 
-    public User reinstateUser(Integer id) {
-        User user = this.users.findById(id).orElseThrow(() -> new UserNotFoundException("Could not find user with given id", id));
+    public Member reinstateMember(Integer id) {
+        Member member = this.members.findById(id).orElseThrow(() -> new MemberNotFoundException("Could not find member with given id", id));
 
-        user.setLockedAt(null);
+        member.setLockedAt(null);
 
-        this.users.save(user);
+        this.members.save(member);
 
-        return user;
+        return member;
     }
 }

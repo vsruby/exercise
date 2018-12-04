@@ -7,15 +7,15 @@ import com.coxautodev.graphql.tools.GraphQLResolver;
 import org.springframework.stereotype.Component;
 
 @Component
-public class UserResolver implements GraphQLResolver<User> {
+public class MemberResolver implements GraphQLResolver<Member> {
 
     private BookRepository books;
 
-    public UserResolver(BookRepository books) {
+    public MemberResolver(BookRepository books) {
         this.books = books;
     }
 
-    public List<Book> getBooks(User user) {
-        return books.findByUserId(user.getId());
+    public List<Book> getBooks(Member member) {
+        return books.findByMemberId(member.getId());
     }
 }
