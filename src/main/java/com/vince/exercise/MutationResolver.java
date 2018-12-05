@@ -83,6 +83,7 @@ public class MutationResolver implements GraphQLMutationResolver {
         book.setSummary(summary);
 
         this.books.save(book);
+        this.booksES.save(new BookES(book));
 
         return book;
     }
@@ -94,6 +95,7 @@ public class MutationResolver implements GraphQLMutationResolver {
         member.setName(name);
 
         this.members.save(member);
+        this.membersES.save(new MemberES(member));
 
         return member;
     }
