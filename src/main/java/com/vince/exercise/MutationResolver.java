@@ -34,7 +34,6 @@ public class MutationResolver implements GraphQLMutationResolver {
         book.setSummary(summary);
 
         this.books.save(book);
-
         this.booksES.save(new BookES(book));
 
         return book;
@@ -47,7 +46,6 @@ public class MutationResolver implements GraphQLMutationResolver {
         member.setName(name);
 
         this.members.save(member);
-
         this.membersES.save(new MemberES(member));
 
         return member;
@@ -55,6 +53,8 @@ public class MutationResolver implements GraphQLMutationResolver {
 
     public boolean deleteBook(Integer id) {
         this.books.deleteById(id);
+        this.booksES.deleteById(id);
+
         return true;
     }
 
@@ -70,6 +70,7 @@ public class MutationResolver implements GraphQLMutationResolver {
             });
 
             this.members.delete(member);
+            this.membersES.delete(new MemberES(member));
         });
 
         return true;
