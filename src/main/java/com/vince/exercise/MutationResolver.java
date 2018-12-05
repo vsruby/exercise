@@ -7,15 +7,24 @@ import com.coxautodev.graphql.tools.GraphQLMutationResolver;
 
 import org.springframework.stereotype.Component;
 
+import com.vince.exercise.elasticsearch.BookES;
+import com.vince.exercise.elasticsearch.BookESRepository;
+import com.vince.exercise.elasticsearch.MemberES;
+import com.vince.exercise.elasticsearch.MemberESRepository;
+
 @Component
 public class MutationResolver implements GraphQLMutationResolver {
 
     private BookRepository books;
+    private BookESRepository booksES;
     private MemberRepository members;
+    private MemberESRepository membersES;
 
-    public MutationResolver(BookRepository books, MemberRepository members) {
+    public MutationResolver(BookRepository books, BookESRepository booksES, MemberRepository members, MemberESRepository membersES) {
         this.books = books;
+        this.booksES = booksES;
         this.members = members;
+        this.membersES = membersES;
     }
 
     public Book newBook(String title, String summary) {
@@ -25,6 +34,8 @@ public class MutationResolver implements GraphQLMutationResolver {
         book.setSummary(summary);
 
         this.books.save(book);
+
+        this.booksES.save(new BookES(book));
 
         return book;
     }
@@ -36,6 +47,8 @@ public class MutationResolver implements GraphQLMutationResolver {
         member.setName(name);
 
         this.members.save(member);
+
+        this.membersES.save(new MemberES(member));
 
         return member;
     }
