@@ -42,6 +42,12 @@ public class QueryResolver implements GraphQLQueryResolver {
         return this.books.findByMemberIdIsNotNullAndCheckedAtBefore(then);
     }
 
+    public Iterable<Member> allOverdueMembers() {
+        DateTime dt = new DateTime(new Date());
+        Date then = (dt.minusWeeks(3)).toDate();
+        return this.members.findAllWithOverdueBooks(then);
+    }
+
     public Optional<Book> book(Integer id) {
         return this.books.findById(id);
     }

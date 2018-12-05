@@ -24,6 +24,8 @@ type Query {
     allCheckedOutBooks: [Book]
     allOverdueBooks: [Book]
 
+    allOverdueMembers: [Member]
+
     book(id: Int!): Book
     member(id: Int!): Member
 }
