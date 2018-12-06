@@ -26,6 +26,9 @@ type Query {
 
     allOverdueMembers: [Member]
 
+    searchBooks(search: String!): [Book]
+    searchMembers(search: String!): [Member]
+
     book(id: Int!): Book
     member(id: Int!): Member
 }
