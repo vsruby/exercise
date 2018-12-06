@@ -63,7 +63,8 @@ public class QueryResolver implements GraphQLQueryResolver {
                 .forEach(match -> ids.add(match.getId()));
         } else if (name != null) {
             this.membersES.findByName(name)
-                .forEach(match -> ids.add(match.getId()));        }
+                .forEach(match -> ids.add(match.getId()));
+        }
 
         if (email != null || name != null) {
             return this.members.findAllById(ids);
