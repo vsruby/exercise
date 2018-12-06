@@ -16,8 +16,8 @@ type Mutation {
 }
 
 type Query {
-    allBooks: [Book]
-    allMembers: [Member]
+    allBooks(title: String, summary: String): [Book]
+    allMembers(email: String, name: String): [Member]
 
     allAvailableBooks: [Book]
 

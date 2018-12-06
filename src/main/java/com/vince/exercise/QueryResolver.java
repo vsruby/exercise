@@ -31,11 +31,44 @@ public class QueryResolver implements GraphQLQueryResolver {
         this.membersES = membersES;
     }
 
-    public Iterable<Book> allBooks() {
+    public Iterable<Book> allBooks(String title, String summary) {
+        ArrayList<Integer> ids = new ArrayList<Integer>();
+
+        if (title != null && summary != null) {
+            this.booksES.findBySummaryAndTitle(summary, title)
+                .forEach(match -> ids.add(match.getId()));
+        } else if (title != null) {
+            this.booksES.findByTitle(title)
+                .forEach(match -> ids.add(match.getId()));
+        } else if (summary != null) {
+            this.booksES.findBySummary(summary)
+                .forEach(match -> ids.add(match.getId()));
+        }
+
+        if (title != null || summary != null) {
+            return this.books.findAllById(ids);
+        }
+
         return this.books.findAll();
     }
 
-    public Iterable<Member> allMembers() {
+    public Iterable<Member> allMembers(String email, String name) {
+        ArrayList<Integer> ids = new ArrayList<Integer>();
+
+        if (email != null && name != null) {
+            this.membersES.findByEmailAndName(email, name)
+                .forEach(match -> ids.add(match.getId()));
+        } else if (email != null) {
+            this.membersES.findByEmail(email)
+                .forEach(match -> ids.add(match.getId()));
+        } else if (name != null) {
+            this.membersES.findByName(name)
+                .forEach(match -> ids.add(match.getId()));        }
+
+        if (email != null || name != null) {
+            return this.members.findAllById(ids);
+        }
+
         return this.members.findAll();
     }
 
