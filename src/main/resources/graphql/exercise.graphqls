@@ -21,8 +21,8 @@ type Query {
 
     allAvailableBooks(title: String, summary: String): [Book]
 
-    allCheckedOutBooks: [Book]
-    allOverdueBooks: [Book]
+    allCheckedOutBooks(title: String, summary: String): [Book]
+    allOverdueBooks(title: String, summary: String): [Book]
 
     allOverdueMembers: [Member]
 

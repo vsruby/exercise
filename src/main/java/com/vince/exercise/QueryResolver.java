@@ -55,13 +55,22 @@ public class QueryResolver implements GraphQLQueryResolver {
         return this.books.findAllAvailable();
     }
 
-    public Iterable<Book> allCheckedOutBooks() {
+    public Iterable<Book> allCheckedOutBooks(String title, String summary) {
+        if (title != null || summary != null) {
+            return this.books.findAllCheckedOutWithIds(this.buildBookIdsListBySummaryAndTitle(summary, title));
+        }
+
         return this.books.findByMemberIdIsNotNullAndCheckedAtIsNotNull();
     }
 
-    public Iterable<Book> allOverdueBooks() {
+    public Iterable<Book> allOverdueBooks(String title, String summary) {
         DateTime dt = new DateTime(new Date());
         Date then = (dt.minusWeeks(3)).toDate();
+
+        if (title != null || summary != null) {
+            return this.books.findAllOverdueWithIds(then, this.buildBookIdsListBySummaryAndTitle(summary, title));
+        }
+
         return this.books.findByMemberIdIsNotNullAndCheckedAtBefore(then);
     }
 
