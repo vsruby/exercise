@@ -17,4 +17,7 @@ public interface BookRepository extends JpaRepository<Book, Integer> {
     @Query("SELECT b FROM Book b WHERE b.checkedAt IS NULL OR b.member IS NULL")
     List<Book> findAllAvailable();
     List<Book> findByMemberIdIsNullOrCheckedAtIsNull(); //Should be the same as the above method
+
+    @Query("SELECT b FROM Book b WHERE (b.checkedAt IS NULL OR b.member IS NULL) AND b.id IN ?1")
+    List<Book> findAllAvailableWithIds(List<Integer> ids);
 }
